@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Back Office Practitioner — by Gururaj Veershetty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1714;
+    --ink-2: #4a4540;
+    --ink-3: #8a8480;
+    --paper: #faf8f4;
+    --paper-2: #f0ece4;
+    --paper-3: #e4ddd0;
+    --sap-blue: #0050b3;
+    --sap-blue-l: #e6f0ff;
+    --ai-green: #006640;
+    --ai-green-l: #e0f5ea;
+    --arch-red: #8b2000;
+    --arch-red-l: #fdeee8;
+    --career-gold: #7a4f00;
+    --career-gold-l: #fdf3e0;
+    --rule: 1px solid #d8d0c4;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ── MASTHEAD ─────────────────────────────── */
+  .masthead {
+    border-bottom: var(--rule);
+    background: var(--paper);
+  }
+  .masthead-top {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    border-bottom: var(--rule);
+  }
+  .logo {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .logo-main {
+    font-family: var(--serif);
+    font-size: 22px;
+    letter-spacing: -0.3px;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .logo-main em { font-style: italic; color: var(--sap-blue); }
+  .logo-sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-2);
+    letter-spacing: 0.01em;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--sap-blue); }
+  .nav-cta {
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--ink);
+    color: var(--paper) !important;
+    padding: 7px 18px;
+    border-radius: 2px;
+    letter-spacing: 0.02em;
+    transition: background 0.15s !important;
+  }
+  .nav-cta:hover { background: var(--sap-blue) !important; }
+
+  .masthead-sub {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .topic-tab {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding: 12px 20px 11px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .topic-tab:hover { color: var(--ink); }
+  .topic-tab.active { color: var(--sap-blue); border-bottom-color: var(--sap-blue); }
+
+  /* ── HERO ──────────────────────────────────── */
+  .hero-band {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3.5rem 2rem;
+  }
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 4rem;
+    align-items: center;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #a09888;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: #a09888;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: 42px;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    margin-bottom: 1.2rem;
+    color: #f5f0e8;
+  }
+  .hero-title em { font-style: italic; color: #7eb8ff; }
+  .hero-desc {
+    font-size: 15px;
+    color: #a09888;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+    max-width: 520px;
+  }
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .author-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--sap-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 14px;
+    color: white;
+    font-weight: 400;
+    flex-shrink: 0;
+  }
+  .author-info { font-size: 13px; }
+  .author-name { color: #f5f0e8; font-weight: 500; line-height: 1.2; }
+  .author-role { color: #a09888; font-size: 11px; }
+  .hero-divider { width: 1px; height: 32px; background: #3a3530; }
+  .hero-time { font-size: 12px; color: #706860; font-family: var(--mono); }
+
+  .hero-panel {
+    border: 1px solid #3a3530;
+    border-radius: 4px;
+    padding: 1.5rem;
+  }
+  .panel-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #706860;
+    margin-bottom: 1rem;
+  }
+  .audience-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .audience-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #c0b8a8;
+  }
+  .aud-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .aud-dot.blue { background: #7eb8ff; }
+  .aud-dot.green { background: #5fcf8a; }
+  .aud-dot.amber { background: #f0c060; }
+
+  /* ── LAYOUT ────────────────────────────────── */
+  .content-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  /* ── SECTION HEADERS ──────────────────────── */
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.75rem;
+  }
+  .section-head h2 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .section-head::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--paper-3);
+  }
+
+  /* ── FEATURED STRIP ───────────────────────── */
+  .featured-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--paper-3);
+    border: var(--rule);
+    margin-bottom: 2.5rem;
+  }
+  .feature-card {
+    background: var(--paper);
+    padding: 1.5rem;
+    transition: background 0.15s;
+    cursor: pointer;
+  }
+  .feature-card:hover { background: var(--paper-2); }
+  .feature-card.lead {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding: 2rem;
+  }
+  .cat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+  }
+  .cat-sap { background: var(--sap-blue-l); color: var(--sap-blue); }
+  .cat-ai { background: var(--ai-green-l); color: var(--ai-green); }
+  .cat-arch { background: var(--arch-red-l); color: var(--arch-red); }
+  .cat-career { background: var(--career-gold-l); color: var(--career-gold); }
+
+  .feature-card .post-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .feature-card.lead .post-title {
+    font-size: 26px;
+  }
+  .post-excerpt {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+  .post-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .post-meta span::before {
+    content: '·';
+    margin-right: 12px;
+  }
+  .post-meta span:first-child::before { content: ''; margin: 0; }
+
+  .feature-visual {
+    background: var(--paper-2);
+    border: var(--rule);
+    border-radius: 2px;
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .visual-code {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    text-align: center;
+    line-height: 1.8;
+  }
+  .visual-code .hl { color: var(--sap-blue); font-weight: 500; }
+  .visual-code .hl2 { color: var(--ai-green); font-weight: 500; }
+
+  /* ── POST LIST ─────────────────────────────── */
+  .post-list { display: flex; flex-direction: column; }
+  .post-row {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-bottom: var(--rule);
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .post-row:hover { opacity: 0.75; }
+  .post-row:last-child { border-bottom: none; }
+  .post-num {
+    font-family: var(--mono);
+    font-size: 22px;
+    color: var(--paper-3);
+    font-weight: 500;
+    line-height: 1;
+    padding-top: 4px;
+  }
+  .post-row .post-title {
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.3;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  /* ── SIDEBAR ───────────────────────────────── */
+  .sidebar { display: flex; flex-direction: column; gap: 2rem; }
+
+  .sidebar-block { }
+  .sidebar-block .post-row {
+    grid-template-columns: 1fr;
+    padding: 1rem 0;
+  }
+
+  .about-card {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1.5rem;
+    border-radius: 2px;
+  }
+  .about-card .author-avatar {
+    width: 52px;
+    height: 52px;
+    font-size: 18px;
+    margin-bottom: 1rem;
+  }
+  .about-name {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: #f5f0e8;
+    margin-bottom: 3px;
+  }
+  .about-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #706860;
+    margin-bottom: 1rem;
+  }
+  .about-bio {
+    font-size: 13px;
+    color: #a09888;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  .about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .about-tag {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: #706860;
+    border: 1px solid #3a3530;
+    padding: 3px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+  }
+
+  .newsletter-card {
+    background: var(--paper-2);
+    border: var(--rule);
+    padding: 1.5rem;
+    border-radius: 2px;
+  }
+  .nl-head {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.25;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .nl-sub {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  .nl-form { display: flex; flex-direction: column; gap: 8px; }
+  .nl-input {
+    font-family: var(--sans);
+    font-size: 13px;
+    padding: 10px 12px;
+    border: var(--rule);
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 2px;
+    outline: none;
+  }
+  .nl-input:focus { border-color: var(--sap-blue); }
+  .nl-btn {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px;
+    background: var(--sap-blue);
+    color: white;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: background 0.15s;
+  }
+  .nl-btn:hover { background: var(--ink); }
+  .nl-note { font-size: 11px; color: var(--ink-3); }
+
+  .topics-card {
+    border: var(--rule);
+    padding: 1.5rem;
+    border-radius: 2px;
+  }
+  .topic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 0;
+  }
+  .topic-chip {
+    font-size: 12px;
+    font-family: var(--mono);
+    color: var(--ink-2);
+    background: var(--paper-2);
+    border: var(--rule);
+    padding: 6px 10px;
+    border-radius: 2px;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+  .topic-chip:hover {
+    background: var(--sap-blue-l);
+    color: var(--sap-blue);
+    border-color: #b3cfff;
+  }
+
+  /* ── CAREER BANNER ─────────────────────────── */
+  .career-banner {
+    background: var(--career-gold-l);
+    border: 1px solid #e8d098;
+    border-radius: 2px;
+    padding: 2rem;
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+  }
+  .banner-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--career-gold);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .banner-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .banner-desc { font-size: 14px; color: var(--ink-2); line-height: 1.65; }
+  .banner-btn {
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--career-gold);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: var(--sans);
+    transition: background 0.15s;
+  }
+  .banner-btn:hover { background: var(--ink); }
+
+  /* ── FOOTER ────────────────────────────────── */
+  .footer {
+    border-top: var(--rule);
+    background: var(--paper-2);
+    padding: 2rem;
+    margin-top: 2rem;
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+  .footer-brand {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .footer-brand em { font-style: italic; color: var(--sap-blue); }
+  .footer-copy {
+    font-size: 12px;
+    color: var(--ink-3);
+    font-family: var(--mono);
+  }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a {
+    font-size: 12px;
+    color: var(--ink-3);
+    transition: color 0.15s;
+  }
+  .footer-links a:hover { color: var(--sap-blue); }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-top">
+    <div class="logo">
+      <div class="logo-main">The Back Office <em>Practitioner</em></div>
+      <div class="logo-sub">SAP · AI · Enterprise Architecture · Career</div>
+    </div>
+    <nav class="nav-links">
+      <a href="#">SAP Back Office</a>
+      <a href="#">AI Thought Leadership</a>
+      <a href="#">Architecture</a>
+      <a href="#">Career Path</a>
+      <a href="#" class="nav-cta">Subscribe</a>
+    </nav>
+  </div>
+  <div class="masthead-sub">
+    <div class="topic-tab active">All</div>
+    <div class="topic-tab">FICO</div>
+    <div class="topic-tab">MM / WM</div>
+    <div class="topic-tab">SD / OTC</div>
+    <div class="topic-tab">SAP BTP</div>
+    <div class="topic-tab">S/4HANA</div>
+    <div class="topic-tab">AI Strategy</div>
+    <div class="topic-tab">AMS</div>
+    <div class="topic-tab">Career Entry</div>
+  </div>
+</header>
+
+<!-- HERO BAND -->
+<section class="hero-band">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Featured Article</div>
+      <h1 class="hero-title">Where <em>SAP expertise</em> meets the intelligence era</h1>
+      <p class="hero-desc">Practical insight for SAP consultants, SMEs, architects and business users — and an on-ramp for graduates stepping into enterprise back-office careers.</p>
+      <div class="hero-meta">
+        <div class="hero-author">
+          <div class="author-avatar">GV</div>
+          <div class="author-info">
+            <div class="author-name">Gururaj Veershetty</div>
+            <div class="author-role">PM · Service Delivery · AMS</div>
+          </div>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-time">Est. 2025</div>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="panel-label">Who this is for</div>
+      <ul class="audience-list">
+        <li><span class="aud-dot blue"></span>SAP Consultants &amp; SMEs</li>
+        <li><span class="aud-dot blue"></span>Solution Architects</li>
+        <li><span class="aud-dot blue"></span>Business Users</li>
+        <li><span class="aud-dot green"></span>AMS &amp; Project Managers</li>
+        <li><span class="aud-dot amber"></span>Graduate students (entry path)</li>
+        <li><span class="aud-dot amber"></span>Post-graduate career seekers</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<div class="content-wrap">
+  <main>
+    <!-- Featured -->
+    <div class="section-head"><h2>Featured</h2></div>
+    <div class="featured-strip">
+      <article class="feature-card lead">
+        <div>
+          <div class="cat-badge cat-sap">SAP Back Office</div>
+          <h2 class="post-title">How AI Copilots are Transforming Period-End Close in SAP FICO</h2>
+          <p class="post-excerpt">From journal entry prediction to automated variance analysis — a practitioner's guide to embedding Joule and LLM-driven agents into your month-end cycle without disrupting existing controls.</p>
+          <div class="post-meta">
+            <span>Apr 28, 2025</span>
+            <span>9 min read</span>
+            <span>Gururaj Veershetty</span>
+          </div>
+        </div>
+        <div class="feature-visual">
+          <div class="visual-code">
+            <span class="hl">SAP FICO</span><br>
+            Period Close Cockpit<br>
+            ──────────────────<br>
+            <span class="hl2">AI Agent</span> ↔ GL Recon<br>
+            <span class="hl2">AI Agent</span> ↔ Variance Rpt<br>
+            ──────────────────<br>
+            Status: <span class="hl">In Progress</span>
+          </div>
+        </div>
+      </article>
+      <article class="feature-card">
+        <div class="cat-badge cat-ai">AI Thought Leadership</div>
+        <h2 class="post-title">Building an Enterprise AI Roadmap on SAP's Core</h2>
+        <p class="post-excerpt">A structured framework for prioritising AI use cases that complement — not bypass — your existing SAP landscape.</p>
+        <div class="post-meta">
+          <span>Apr 20, 2025</span>
+          <span>7 min read</span>
+        </div>
+      </article>
+      <article class="feature-card">
+        <div class="cat-badge cat-arch">Architecture</div>
+        <h2 class="post-title">Event-driven SAP BTP Patterns for Real-time AI Inference</h2>
+        <p class="post-excerpt">Designing integration flows that feed transactional SAP events into AI inference pipelines with sub-second latency.</p>
+        <div class="post-meta">
+          <span>Apr 14, 2025</span>
+          <span>6 min read</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- Latest -->
+    <div class="section-head"><h2>Latest posts</h2></div>
+    <div class="post-list">
+      <div class="post-row">
+        <div class="post-num">01</div>
+        <div>
+          <div class="cat-badge cat-sap">SAP Back Office</div>
+          <div class="post-title">Effective AMS Governance: Reducing Ticket Noise in SAP MM and WM Landscapes</div>
+          <div class="post-meta">
+            <span>Apr 10, 2025</span>
+            <span>8 min read</span>
+          </div>
+        </div>
+      </div>
+      <div class="post-row">
+        <div class="post-num">02</div>
+        <div>
+          <div class="cat-badge cat-ai">AI Thought Leadership</div>
+          <div class="post-title">RAG vs Fine-Tuning: Which AI Approach Fits SAP Back Office Automation?</div>
+          <div class="post-meta">
+            <span>Apr 5, 2025</span>
+            <span>10 min read</span>
+          </div>
+        </div>
+      </div>
+      <div class="post-row">
+        <div class="post-num">03</div>
+        <div>
+          <div class="cat-badge cat-career">Career Path</div>
+          <div class="post-title">The 90-Day Plan: How a Graduate Should Learn SAP FICO from Zero</div>
+          <div class="post-meta">
+            <span>Mar 28, 2025</span>
+            <span>12 min read</span>
+          </div>
+        </div>
+      </div>
+      <div class="post-row">
+        <div class="post-num">04</div>
+        <div>
+          <div class="cat-badge cat-arch">Architecture</div>
+          <div class="post-title">Service Delivery KPIs That Actually Matter in SAP AMS Engagements</div>
+          <div class="post-meta">
+            <span>Mar 20, 2025</span>
+            <span>7 min read</span>
+          </div>
+        </div>
+      </div>
+      <div class="post-row">
+        <div class="post-num">05</div>
+        <div>
+          <div class="cat-badge cat-sap">SAP Back Office</div>
+          <div class="post-title">Understanding SAP SD Order-to-Cash: A Visual Walkthrough for Business Users</div>
+          <div class="post-meta">
+            <span>Mar 12, 2025</span>
+            <span>9 min read</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Career Banner -->
+    <div class="career-banner">
+      <div>
+        <div class="banner-tag">Career Launchpad</div>
+        <div class="banner-title">New to SAP? Start here.</div>
+        <div class="banner-desc">A curated reading path for graduates and post-graduates looking to break into enterprise back-office applications. From understanding modules to landing your first consulting role.</div>
+      </div>
+      <button class="banner-btn">Start the path →</button>
+    </div>
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="about-card">
+      <div class="author-avatar">GV</div>
+      <div class="about-name">Gururaj Veershetty</div>
+      <div class="about-title">Author &amp; Practitioner</div>
+      <p class="about-bio">Project Manager, Service Delivery lead, and AMS practitioner with hands-on experience across SAP back-office landscapes. Writing at the intersection of enterprise operations and emerging AI.</p>
+      <div class="about-tags">
+        <span class="about-tag">Project Mgmt</span>
+        <span class="about-tag">Service Delivery</span>
+        <span class="about-tag">AMS</span>
+        <span class="about-tag">SAP</span>
+        <span class="about-tag">AI Strategy</span>
+      </div>
+    </div>
+
+    <div class="newsletter-card">
+      <div class="nl-head">Stay ahead of the curve</div>
+      <p class="nl-sub">New articles on SAP, AI, and career insight — delivered fortnightly. No noise, just signal.</p>
+      <div class="nl-form">
+        <input class="nl-input" type="text" placeholder="Your name" />
+        <input class="nl-input" type="email" placeholder="your@email.com" />
+        <button class="nl-btn">Subscribe — it's free</button>
+        <span class="nl-note">No spam. Unsubscribe anytime.</span>
+      </div>
+    </div>
+
+    <div class="topics-card">
+      <div class="section-head" style="margin-bottom:1rem"><h2>Browse by topic</h2></div>
+      <div class="topic-grid">
+        <div class="topic-chip">FICO</div>
+        <div class="topic-chip">MM/WM</div>
+        <div class="topic-chip">SD/OTC</div>
+        <div class="topic-chip">HR/HCM</div>
+        <div class="topic-chip">SAP BTP</div>
+        <div class="topic-chip">S/4HANA</div>
+        <div class="topic-chip">Joule AI</div>
+        <div class="topic-chip">AI Core</div>
+        <div class="topic-chip">AMS Ops</div>
+        <div class="topic-chip">Delivery</div>
+        <div class="topic-chip">Career</div>
+        <div class="topic-chip">Agile</div>
+      </div>
+    </div>
+
+    <div class="sidebar-block">
+      <div class="section-head"><h2>Popular reads</h2></div>
+      <div class="post-list">
+        <div class="post-row">
+          <div>
+            <div class="cat-badge cat-career">Career Path</div>
+            <div class="post-title">SAP Module Guide: Which Back-Office Track is Right for You?</div>
+            <div class="post-meta"><span>Mar 5, 2025</span><span>11 min</span></div>
+          </div>
+        </div>
+        <div class="post-row">
+          <div>
+            <div class="cat-badge cat-sap">SAP Back Office</div>
+            <div class="post-title">Procure-to-Pay in SAP: End-to-End Process Explained Simply</div>
+            <div class="post-meta"><span>Feb 20, 2025</span><span>8 min</span></div>
+          </div>
+        </div>
+        <div class="post-row">
+          <div>
+            <div class="cat-badge cat-ai">AI Strategy</div>
+            <div class="post-title">What SAP Joule Can (and Can't) Do for Your Finance Team</div>
+            <div class="post-meta"><span>Feb 10, 2025</span><span>6 min</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">The Back Office <em>Practitioner</em></div>
+    <div class="footer-links">
+      <a href="#">About</a>
+      <a href="#">Archive</a>
+      <a href="#">Subscribe</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-copy">© 2025 Gururaj Veershetty</div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.topic-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.topic-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+  document.querySelectorAll('.nl-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const form = this.closest('.nl-form') || this.closest('.newsletter-card');
+      const email = form ? form.querySelector('input[type="email"]') : null;
+      if (email && email.value) {
+        this.textContent = '✓ You\'re subscribed!';
+        this.style.background = '#006640';
+        this.disabled = true;
+      }
+    });
+  });
+</script>
+</body>
+</html>
